@@ -15,7 +15,7 @@ Info operator+(const Info& a, const Info& b) {}
 std::vector<Info> tr(4 * n + 1);
 
 // 其中tmp维护的是当且从在 [ql, qr] 范围内，从左到右完整的线段树节点的合并的答案
-auto findl = [&](auto& self, int u, int l, int r, int ql, int qr, Info& params, const std::funciont<bool(const Info&)& func>) -> int {
+auto findl = [&](auto& self, int u, int l, int r, int ql, int qr, Info& params, const std::function<bool(const Info&)& func>) -> int {
     if (l >= ql && r <= qr) {
         auto tmp = params + tr[u];
         if (!func(tmp)) {
@@ -41,7 +41,7 @@ auto findl = [&](auto& self, int u, int l, int r, int ql, int qr, Info& params, 
 
 // 其中tmp维护的是当且从在 [ql, qr] 范围内，从右到左完整的线段树节点的合并的答案
 // func 是一个判断条件
-auto findr = [&](auto& self, int u, int l, int r, int ql, int qr, Info& params, const std::funciont<bool(const Info&)& func) -> int {
+auto findr = [&](auto& self, int u, int l, int r, int ql, int qr, Info& params, const std::function<bool(const Info&)& func) -> int {
     if (l >= ql && r <= qr) {
         auto tmp = tr[u] + params;
         if (!func(tmp)) {
