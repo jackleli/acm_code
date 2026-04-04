@@ -24,6 +24,71 @@ struct combine {
         return 1LL * f[a] * finv[b] % mod * finv[a - b] % mod;
     }
 }
+
+// ModInt 自动取模类
+template <int32_t kMod>
+struct ModInt {
+  int32_t val;
+  ModInt() : val(0) {}
+  ModInt(int64_t x) {
+    x %= kMod;
+    if (x >= kMod) {
+      x -= kMod;
+    }
+    if (x < 0) {
+      x += kMod;
+    }
+    val = x;
+  }
+  int32_t value() const { return val; }
+  ModInt pow(int64_t b) const {
+    ModInt res(1);
+    ModInt a = *this;
+    while (b) {
+      if (b & 1) {
+        res *= a;
+      }
+      a *= a;
+      b >>= 1;
+    }
+    return res;
+  }
+  ModInt inv() const { return pow(kMod - 2); }
+  ModInt operator+(const ModInt& rhs) const { return ModInt(val + rhs.val); }
+  ModInt operator-(const ModInt& rhs) const { return ModInt(val - rhs.val); }
+  ModInt operator*(const ModInt& rhs) const {
+    return ModInt(int64_t(val) * rhs.val);
+  }
+  ModInt operator/(const ModInt& rhs) const { return *this * rhs.inv(); }
+  ModInt& operator+=(const ModInt& rhs) { return *this = *this + rhs; }
+  ModInt& operator-=(const ModInt& rhs) { return *this = *this - rhs; }
+  ModInt& operator*=(const ModInt& rhs) { return *this = *this * rhs; }
+  ModInt& operator/=(const ModInt& rhs) { return *this = *this / rhs; }
+  friend std::ostream& operator<<(std::ostream& os, const ModInt& x) {
+    return os << x.val;
+  }
+  friend std::istream& operator>>(std::istream& is, ModInt& x) {
+    int64_t val;
+    is >> val;
+    x = ModInt(val);
+    return is;
+  }
+  friend ModInt operator+(int64_t x, const ModInt& rhs) {
+    return ModInt(x) + rhs;
+  }
+  friend ModInt operator-(int64_t x, const ModInt& rhs) {
+    return ModInt(x) - rhs;
+  }
+  friend ModInt operator*(int64_t x, const ModInt& rhs) {
+    return ModInt(x) * rhs;
+  }
+  friend ModInt operator/(int64_t x, const ModInt& rhs) {
+    return ModInt(x) / rhs;
+  }
+};
+
+using Mint = ModInt<998244353>;
+
 ```
 
 
