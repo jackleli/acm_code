@@ -19,6 +19,11 @@
 
     def apply(self, v: "Tag"):
       self.lazy += v.lazy
+    
+    def __eq__(self, other):
+      if isinstance(other, Tag):
+        return self.lazy == other.lazy
+      return False
 
   class Info:
     def __init__(self, sum: int = 0, len: int = 0):
